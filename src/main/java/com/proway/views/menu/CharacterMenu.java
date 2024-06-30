@@ -52,7 +52,7 @@ public class CharacterMenu {
                 case 3:
                     System.out.println("Todo progresso com este personagem será perdido, tem certeza? Digite SIM para SIM");
                     String choice = ScanValidation.getValidStringInput(scanner);
-                    if(choice.equalsIgnoreCase("sim")){
+                    if (choice.equalsIgnoreCase("sim")) {
                         characterDAO.deleteById(selectedCharacter.getId());
                         Home.updateCharacters();
                     }

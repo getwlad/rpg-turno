@@ -3,7 +3,7 @@ package com.proway.app.effects.interfaces;
 import com.proway.app.characters.interfaces.Character;
 
 public interface Effect {
-    public void setDamagePerRound(int damagePerRound);
+    void setDamagePerRound(int damagePerRound);
 
     void applyEffect(Character character);
 
@@ -11,6 +11,6 @@ public interface Effect {
 
     void reduceDuration();
 
-    public int getDamagePerRound();
+    int getDamagePerRound();
 
 }

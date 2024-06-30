@@ -44,7 +44,7 @@ public class Start {
             }
 
 
-            EnemiesView.turn(enemy, this.getCharacter(),  this.getEnemies());
+            EnemiesView.turn(enemy, this.getCharacter(), this.getEnemies());
 
             if (this.getCharacter().getLifePoints() <= 0) {
                 System.out.println("Monstros venceram a batalha!");

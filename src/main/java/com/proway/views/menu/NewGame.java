@@ -7,20 +7,18 @@ import com.proway.app.characters.player.Warrior;
 import com.proway.util.ScanValidation;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Scanner;
 
 import static com.proway.views.menu.Home.characterDAO;
 
 public class NewGame {
     public static void show(Scanner scanner, boolean newGame) throws SQLException {
-        if(newGame && !(Home.getCharacters().isEmpty())){
+        if (newGame && !(Home.getCharacters().isEmpty())) {
             System.out.println("Todo seu progresso será perdido, tem certeza? Digite SIM caso tenha certeza");
             String choice = ScanValidation.getValidStringInput(scanner);
-            if(choice.equalsIgnoreCase("sim")){
+            if (choice.equalsIgnoreCase("sim")) {
                 characterDAO.deleteAll();
-            }
-            else {
+            } else {
                 return;
             }
         }

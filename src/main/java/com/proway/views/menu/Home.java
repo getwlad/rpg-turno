@@ -8,6 +8,7 @@ import com.proway.dao.InventoryXItemDAO;
 import com.proway.dao.ItemDAO;
 import com.proway.database.DatabaseUtil;
 import com.proway.util.ScanValidation;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -66,6 +67,7 @@ public class Home {
     public static List<Player> getCharacters() {
         return characters;
     }
+
     public static void updateCharacters() {
         characters = characterDAO.loadCharacters();
     }

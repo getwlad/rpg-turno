@@ -85,9 +85,10 @@ public abstract class Character {
         System.out.println(target.getName() + ", pontos de vida restantes: " + target.getLifePoints());
     }
 
-    public void heal(int points){
+    public void heal(int points) {
         this.lifePoints = Math.min(this.getLifePoints() + points, this.getLife());
     }
+
     private boolean isCriticalHit() {
         return Math.random() < getCriticalHitChance();
     }

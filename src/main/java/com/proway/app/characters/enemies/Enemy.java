@@ -52,7 +52,6 @@ public class Enemy extends Character {
                     if (random.nextInt(100) < 50) {
                         droppableItems.add(item);
                     }
-                    ;
                     break;
                 case Rarity.RARE:
                     if (random.nextInt(100) < 30) {

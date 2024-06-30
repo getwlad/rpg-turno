@@ -6,7 +6,7 @@ import com.proway.app.items.enums.Type;
 import java.sql.*;
 
 public class DatabaseInitializer {
-    private Connection conn;
+    private final Connection conn;
 
     public DatabaseInitializer(Connection conn) {
         this.conn = conn;

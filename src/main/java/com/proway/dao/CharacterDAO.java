@@ -200,12 +200,12 @@ public class CharacterDAO {
     }
 
     public void deleteAll() throws SQLException {
-                String sql = "DELETE FROM Character WHERE 1 = 1";
-                try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                    pstmt.execute();
-                } catch (SQLException e) {
-                    throw e;
-                }
+        String sql = "DELETE FROM Character WHERE 1 = 1";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.execute();
+        } catch (SQLException e) {
+            throw e;
+        }
     }
 
     public void deleteById(int id) throws SQLException {
