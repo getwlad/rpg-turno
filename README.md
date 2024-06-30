@@ -19,7 +19,8 @@ O objetivo é fazer rpg de turno aplicando os conceitos de POO.
 - Banco de dados em memória para armazenar seu progresso.
 
 ## :video_camera: Demonstração de uso
-![rpg-turnoo-–-Main java-Administrator-2024-06-29-18-29-36](https://github.com/getwlad/rpg-turno/assets/102919718/d320e3c6-1edc-402f-9d7b-6c9af44151b7)
+![gif](https://github.com/getwlad/rpg-turno/assets/102919718/b9818710-ff73-49ee-aa1a-78016c3d2730)
+
 
 
 ## :hammer_and_wrench: Instalação
