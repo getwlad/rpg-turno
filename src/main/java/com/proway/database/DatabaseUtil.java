@@ -1,4 +1,4 @@
-package com.proway.config;
+package com.proway.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,8 +18,8 @@ public class DatabaseUtil {
     }
 
     public static void closeConnection(Connection conn) throws SQLException {
-       if (conn != null) {
-           conn.close();
-       }
+        if (conn != null) {
+            conn.close();
+        }
     }
 }

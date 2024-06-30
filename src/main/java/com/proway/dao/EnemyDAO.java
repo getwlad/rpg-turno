@@ -1,17 +1,6 @@
 package com.proway.dao;
 
-import com.proway.app.characters.enemies.Enemy;
-import com.proway.app.characters.enemies.Goblin;
-import com.proway.app.characters.enemies.Orc;
-import com.proway.app.characters.enemies.Skeleton;
-import com.proway.app.characters.enemies.Slime;
-import com.proway.app.characters.enemies.Bat;
-import com.proway.app.characters.enemies.Spider;
-import com.proway.app.characters.enemies.Wolf;
-import com.proway.app.characters.enemies.Troll;
-import com.proway.app.characters.enemies.Wizard;
-import com.proway.app.effects.Sleep;
-import com.proway.app.effects.Stun;
+import com.proway.app.characters.enemies.*;
 
 import java.util.Random;
 

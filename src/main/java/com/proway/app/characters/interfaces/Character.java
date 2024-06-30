@@ -1,15 +1,17 @@
 package com.proway.app.characters.interfaces;
 
-import com.proway.app.characters.enemies.Enemy;
-import com.proway.app.effects.Burn;
-import com.proway.app.effects.Poison;
-import com.proway.app.effects.Sleep;
-import com.proway.app.effects.Stun;
+import com.proway.app.effects.*;
 import com.proway.app.effects.interfaces.Effect;
+import com.proway.app.items.Armor;
+import com.proway.app.items.Weapon;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 public abstract class Character {
     private String name;
     private int id;
@@ -24,16 +26,24 @@ public abstract class Character {
     private int experience;
     private int experienceToLevelUp;
     private int life;
+    private Weapon weapon;
+    private Armor armor;
+    private int strengthBonus = 0;
+    private int magicBonus = 0;
+    private int lifePointsBonus = 0;
+    private int criticalDamageBonus = 0;
+    private int defenseBonus = 0;
+    private int magicDefenseBonus = 0;
 
     private List<Effect> effects = new ArrayList<>();
 
-    private static final double LEVEL_UP_MULTIPLIER = 1.2;
-    private static final double STAT_UP_MULTIPLIER = 1.01;
+    protected static final int initialXPRequired = 100;
+    protected static final double STAT_UP_MULTIPLIER = 1.1;
     protected static final int BASE_STAT_INCREASE = 2;
 
     public Character(String name, int lifePoints, int strength, int defense, int magic, int magicPoints,
                      int magicDefense, int criticalDamage, int level, int experience,
-                     int experienceToLevelUp) {
+                     int experienceToLevelUp, Armor armor, Weapon weapon) {
         this.name = name;
         this.magic = magic + (level * BASE_STAT_INCREASE);
         this.life = lifePoints + (level * BASE_STAT_INCREASE);
@@ -44,8 +54,18 @@ public abstract class Character {
         this.magicDefense = magicDefense + (level * BASE_STAT_INCREASE);
         this.criticalDamage = criticalDamage + (level * BASE_STAT_INCREASE);
         this.level = level;
-        this.experience = experience + (level * BASE_STAT_INCREASE);
-        this.experienceToLevelUp = experienceToLevelUp + (level * BASE_STAT_INCREASE);
+        this.experience = experience + (level * 2);
+        this.experienceToLevelUp = experienceToLevelUp;
+        this.armor = null;
+        this.weapon = null;
+        if (armor != null) {
+            armor.equip(this);
+            this.armor = armor;
+        }
+        if (weapon != null) {
+            weapon.equip(this);
+            this.weapon = weapon;
+        }
     }
 
 
@@ -55,58 +75,90 @@ public abstract class Character {
     }
 
     public void attack(Character target) {
-        int damage = calcDamage(target);
+        int damage = calctStrengthDamage(target);
+        if (isCriticalHit()) {
+            damage *= (int) getCriticalDamageMultiplier();
+            System.out.println("Dano crítico!");
+        }
         target.receiveDamage(damage);
         System.out.println(this.getName() + " ataca " + target.getName() + " causando " + damage + " de dano.");
         System.out.println(target.getName() + ", pontos de vida restantes: " + target.getLifePoints());
     }
 
-    protected int calcDamage(Character target) {
-        return Math.max(this.getStrength() - target.getDefense(), 0);
+    public void heal(int points){
+        this.lifePoints = Math.min(this.getLifePoints() + points, this.getLife());
+    }
+    private boolean isCriticalHit() {
+        return Math.random() < getCriticalHitChance();
     }
 
-    public void defend() {
-        this.defense += 5;
+    private double getCriticalHitChance() {
+        return 0.1 + (double) getCriticalDamage() / 100.0;
     }
 
-    public void castSpell(String spellName, Character target) {
+    private double getCriticalDamageMultiplier() {
+        return 1.0 + (double) getCriticalDamageBonus() / 100.0;
+    }
+
+    protected int calctStrengthDamage(Character target) {
+        return Math.max((this.getStrength() + this.getStrengthBonus()) - (target.getDefense() + target.getDefenseBonus()), 0);
+    }
+
+    protected int calcMagicDamage(Character target) {
+        return Math.max((this.getMagic() + this.getMagicBonus()) - (target.getMagicDefenseBonus() + target.getMagicDefenseBonus()), 0);
+    }
+
+
+    public boolean castSpell(String spellName, Character target) {
         int spellCost = 0;
         Effect spellEffect = null;
+        int damage = calcMagicDamage(target);
+        if (isCriticalHit()) {
+            damage *= (int) getCriticalDamageMultiplier();
+            System.out.println("Mágia se elevou a nível crítico!");
+        }
 
         switch (spellName.toLowerCase()) {
             case "burn":
                 spellCost = 10;
-                spellEffect = new Burn(this.getMagic(), 3);
+                spellEffect = new Burn(damage, 3);
                 break;
             case "poison":
                 spellCost = 10;
-                spellEffect = new Poison(this.getMagic(), 4);
+                spellEffect = new Poison(damage, 4);
+                break;
+            case "heal":
+                spellCost = 15;
+                spellEffect = new Heal((int) (5 + (level * 1.1)), 1);
                 break;
             case "stun":
                 spellCost = 20;
-                spellEffect = new Stun(this.getMagic(), 1);
+                spellEffect = new Stun(1);
                 break;
             case "sleep":
                 spellCost = 30;
-                spellEffect = new Sleep(this.getMagic(), 2);
+                spellEffect = new Sleep(2);
                 break;
+
             default:
                 System.out.println("Magia desconhecida.");
-                return;
+                return false;
         }
 
         if (this.getMagicPoints() >= spellCost) {
             this.setMagicPoints(this.getMagicPoints() - spellCost);
-            if (spellEffect.getDamagePerRound() <= target.getMagicDefense() ){
-                System.out.println(target.getName() + " resistiu a mágia.");
-                return;
+            String message = damage <= 0 ? target.getName() + " resistiu a mágia." : this.getName() + " lançou "
+                    + spellName + " em " + target.getName() + ".";
+            System.out.println(message);
+            if (damage > 0) {
+                target.addEffect(spellEffect);
             }
-            target.addEffect(spellEffect);
-            System.out.println(this.getName() + " lançou " + spellName + " em " + target.getName() + ".");
+            System.out.println("Pontos de magia restantes: " + this.getMagicPoints());
+            return true;
         } else {
             System.out.println("Pontos de magia insuficientes.");
+            return false;
         }
-        System.out.println("Pontos de magia restantes: " + this.getMagicPoints());
     }
 
     public void addEffect(Effect effect) {
@@ -124,36 +176,6 @@ public abstract class Character {
 
         }
         effects.removeAll(effectsToRemove);
-    }
-
-    public void gainExperience(Enemy enemy) {
-        System.out.println("Você ganhou: " + enemy.getExperience() + " pontos de experiência");
-        int expReward = enemy.getExpReward();
-        this.experience += expReward;
-        if (this.experience >= this.experienceToLevelUp) {
-            levelUp();
-        }
-    }
-
-    private void levelUp() {
-        this.setLevel(this.getLevel() + 1);
-        this.setExperience(0);
-        this.experienceToLevelUp *= LEVEL_UP_MULTIPLIER;
-        System.out.println();
-        System.out.println("---Parabéns---");
-        System.out.println("Você subiu de level, level atual: " + this.getLevel());
-        System.out.println();
-        increaseStats();
-    }
-
-    private void increaseStats() {
-        this.life = (int) (this.life * STAT_UP_MULTIPLIER + BASE_STAT_INCREASE);
-        this.strength = (int) (this.strength * STAT_UP_MULTIPLIER + BASE_STAT_INCREASE);
-        this.defense = (int) (this.defense * STAT_UP_MULTIPLIER + BASE_STAT_INCREASE);
-        this.magicPoints = (int) (this.magicPoints * STAT_UP_MULTIPLIER + BASE_STAT_INCREASE);
-        this.magicDefense = (int) (this.magicDefense * STAT_UP_MULTIPLIER + BASE_STAT_INCREASE);
-        this.criticalDamage = (int) (this.criticalDamage * STAT_UP_MULTIPLIER + BASE_STAT_INCREASE);
-        this.setLifePoints(this.life);
     }
 
 
@@ -175,145 +197,24 @@ public abstract class Character {
         return false;
     }
 
-    public String getCharacterInfo() {
+    public String getCharacterInfo(boolean player) {
         StringBuilder sb = new StringBuilder();
         sb.append("Nome: ").append(name).append("\n");
+        if (player) {
+            sb.append("Experiência atual: ").append(experience).append("\n");
+            sb.append("Experiência necessária para próximo nível: ").append(experienceToLevelUp).append("\n");
+        }
         sb.append("Level: ").append(level).append("\n");
-        sb.append("Experiência atual: ").append(experience).append("\n");
-        sb.append("Experiência necessária para próximo nível: ").append(experienceToLevelUp).append("\n");
-        sb.append("Vida: ").append(lifePoints).append("\n");
-        sb.append("Força: ").append(strength).append("\n");
-        sb.append("Defesa: ").append(defense).append("\n");
-        sb.append("Pontos Mágicos: ").append(magicPoints).append("\n");
-        sb.append("Defesa Mágica: ").append(magicDefense).append("\n");
-        sb.append("Dano Crítico: ").append(criticalDamage).append("\n");
-
+        sb.append("Vida: ").append(lifePoints).append(" (Bonus: ").append(getLifePointsBonus()).append(")\n");
+        sb.append("Força: ").append(strength).append(" (Bonus: ").append(getStrengthBonus()).append(")\n");
+        sb.append("Pontos Mágicos: ").append(magicPoints).append(" (Bonus: ").append(getMagicBonus()).append(")\n");
+        sb.append("Defesa Mágica: ").append(magicDefenseBonus).append(" (Bonus: ").append(getMagicDefenseBonus()).append(")\n");
+        sb.append("Dano Crítico: ").append(criticalDamage).append(" (Bonus: ").append(getCriticalDamageBonus()).append(")\n");
+        sb.append("Defesa: ").append(defense).append(" (Bonus: ").append(getDefenseBonus()).append("\n");
+        sb.append("Armor: ").append(this.getArmor() != null ? this.getArmor().getName() : "").append("\n");
+        sb.append("Weapon: ").append(this.getWeapon() != null ? this.getWeapon().getName() : "").append("\n");
         return sb.toString();
     }
 
-    public String getEnemyInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Classe: ").append(name).append("\n");
-        sb.append("Level: ").append(level).append("\n");
-        sb.append("Vida: ").append(lifePoints).append("\n");
-        sb.append("Força: ").append(strength).append("\n");
-        sb.append("Defesa: ").append(defense).append("\n");
-        sb.append("Pontos Mágicos: ").append(magicPoints).append("\n");
-        sb.append("Defesa Mágica: ").append(magicDefense).append("\n");
-        sb.append("Dano Crítico: ").append(criticalDamage).append("\n");
 
-        return sb.toString();
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public int getLifePoints() {
-        return this.lifePoints;
-    }
-
-    public int getStrength() {
-        return this.strength;
-    }
-
-    public int getDefense() {
-        return this.defense;
-    }
-
-    public int getMagicPoints() {
-        return this.magicPoints;
-    }
-
-    public int getMagicDefense() {
-        return this.magicDefense;
-    }
-
-    public int getCriticalDamage() {
-        return this.criticalDamage;
-    }
-
-    public int getLevel() {
-        return this.level;
-    }
-
-    public int getExperience() {
-        return this.experience;
-    }
-
-    public int getExperienceToLevelUp() {
-        return this.experienceToLevelUp;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLifePoints(int lifePoints) {
-        this.lifePoints = lifePoints;
-    }
-
-    public void setStrength(int strength) {
-        this.strength = strength;
-    }
-
-    public void setDefense(int defense) {
-        this.defense = defense;
-    }
-
-    public void setMagicPoints(int magicPoints) {
-        this.magicPoints = magicPoints;
-    }
-
-    public void setMagicDefense(int magicDefense) {
-        this.magicDefense = magicDefense;
-    }
-
-    public void setCriticalDamage(int criticalDamage) {
-        this.criticalDamage = criticalDamage;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
-
-    public void setExperienceToLevelUp(int experienceToLevelUp) {
-        this.experienceToLevelUp = experienceToLevelUp;
-    }
-
-    public List<Effect> getEffects() {
-        return this.effects;
-    }
-
-    public void setEffects(List<Effect> effects) {
-        this.effects = effects;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getMagic() {
-        return magic;
-    }
-
-    public void setMagic(int magic) {
-        this.magic = magic;
-    }
-
-    public int getLife() {
-        return life;
-    }
-
-    public void setLife(int life) {
-        this.life = life;
-    }
 }

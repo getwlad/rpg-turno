@@ -1,10 +1,10 @@
 package com.proway.app.characters.player;
 
-import com.proway.app.characters.interfaces.Character;
+import com.proway.app.miscellany.Inventory;
 
-public class Warrior extends Character {
+public class Warrior extends Player {
     public Warrior(String nome) {
-        super(nome, 30, 15, 10, 5,5, 5, 2,
-                1, 0, 10);
+        super(nome, 30, 20, 15, 5, 5, 5, 2,
+                1, 0, initialXPRequired, new Inventory(200), null, null);
     }
 }

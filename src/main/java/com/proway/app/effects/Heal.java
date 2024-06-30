@@ -7,17 +7,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Sleep implements Effect {
+public class Heal implements Effect {
     private int damagePerRound;
     private int duration;
 
-    public Sleep(int duration) {
-        this.damagePerRound = 0;
+    public Heal(int damagePerRound, int duration) {
+        this.damagePerRound = damagePerRound;
         this.duration = duration;
     }
 
     @Override
     public void applyEffect(Character character) {
+        character.heal(this.getDamagePerRound());
+        System.out.println(character.getName() + " recebebeu efeito: " + this.getClass().getSimpleName() + ", causando: " +
+                +this.getDamagePerRound() + " de aumento de hp");
+        System.out.println(character.getName() + " pontos de vida restantes: " + character.getLifePoints());
     }
 
     @Override

@@ -1,46 +1,50 @@
 package com.proway.views.battle;
 
 import com.proway.app.characters.enemies.Enemy;
-import com.proway.app.characters.interfaces.Character;
+import com.proway.app.characters.player.Player;
+import com.proway.views.menu.Home;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 public class Start {
-    private final Character character;
+    private final Player character;
     private final List<Enemy> enemies;
 
-    public Start(Character character, List<Enemy> enemies) {
+    public Start(Player character, List<Enemy> enemies) {
         this.character = character;
         this.enemies = enemies;
     }
 
-    public void begin(Scanner scanner) {
+    public void begin(Scanner scanner) throws SQLException {
         System.out.println();
         Enemy enemy = this.getEnemies().getFirst();
-        System.out.println(enemy.getEnemyInfo());
+        System.out.println(enemy.getCharacterInfo(false));
         while (true) {
-            Player.turn(this.getCharacter(), scanner, enemy);
+            PlayerView.turn(this.getCharacter(), scanner, enemy);
 
             System.out.println();
 
             if (enemy.getLifePoints() <= 0) {
                 System.out.println(enemy.getName() + " foi derrotado.");
                 character.gainExperience(enemy);
+                enemy.dropItem(this.getCharacter());
                 this.enemies.remove(enemy);
 
                 if (this.getEnemies().isEmpty()) {
                     System.out.println("Jogador venceu a batalha!");
                     this.getCharacter().setLifePoints(this.getCharacter().getLife());
+                    Home.characterDAO.updateCharacter(character);
                     break;
                 }
 
                 enemy = this.getEnemies().getFirst();
-                System.out.println(enemy.getEnemyInfo());
+                System.out.println(enemy.getCharacterInfo(false));
             }
 
 
-            Enemies.turn(enemy, this.getCharacter());
+            EnemiesView.turn(enemy, this.getCharacter(),  this.getEnemies());
 
             if (this.getCharacter().getLifePoints() <= 0) {
                 System.out.println("Monstros venceram a batalha!");
@@ -52,8 +56,7 @@ public class Start {
     }
 
 
-
-    public Character getCharacter() {
+    public Player getCharacter() {
         return character;
     }
 
