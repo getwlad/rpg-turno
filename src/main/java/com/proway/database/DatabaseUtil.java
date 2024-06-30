@@ -16,4 +16,10 @@ public class DatabaseUtil {
         }
         return conn;
     }
+
+    public static void closeConnection(Connection conn) throws SQLException {
+       if (conn != null) {
+           conn.close();
+       }
+    }
 }
