@@ -13,15 +13,14 @@ public class PlayerView {
         character.applyEffect();
         if (character.getLifePoints() > 0) {
             if (!character.hasStunEffect() && !character.hasSleepEffect()) {
-                System.out.println("\n" + character.getName() + ", escolha sua ação:");
-                System.out.println("1. Atacar");
-                System.out.println("2. Lançar Magia");
-
-                int escolhaAcao = ScanValidation.getValidIntInput(scanner);
-
                 boolean actionSuccessful = false;
 
                 while (!actionSuccessful) {
+                    System.out.println("\n" + character.getName() + ", escolha sua ação:");
+                    System.out.println("1. Atacar");
+                    System.out.println("2. Lançar Magia");
+                    int escolhaAcao = ScanValidation.getValidIntInput(scanner);
+
                     switch (escolhaAcao) {
                         case 1:
                             character.attack(enemy);

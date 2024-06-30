@@ -116,7 +116,7 @@ public abstract class Character {
         int damage = calcMagicDamage(target);
         if (isCriticalHit()) {
             damage *= (int) getCriticalDamageMultiplier();
-            System.out.println("Mágia se elevou a nível crítico!");
+            System.out.println("Se conjurada, esta magia elevará com nível crítico!");
         }
 
         switch (spellName.toLowerCase()) {
