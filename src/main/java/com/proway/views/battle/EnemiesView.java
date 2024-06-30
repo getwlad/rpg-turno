@@ -28,7 +28,7 @@ public class EnemiesView {
                             enemy.castSpell("sleep", target);
                             break;
                         case 4:
-                            enemy.castSpell("heal", target);
+                            enemy.castSpell("heal", enemy);
                             break;
                     }
                 } else {

@@ -49,12 +49,11 @@ public class PlayerView {
         System.out.println("4. Stun (15 MP)");
         System.out.println("5. Sleep (20 MP)");
 
-        int escolhaMagia = scanner.nextInt();
-        scanner.nextLine(); // Consumir nova linha
+        int escolhaMagia = ScanValidation.getValidIntInput(scanner);
 
         boolean spellCast = false;
 
-        while (!spellCast) {
+        while (true) {
             switch (escolhaMagia) {
                 case 1:
                     spellCast = character.castSpell("burn", enemy);
@@ -63,7 +62,7 @@ public class PlayerView {
                     spellCast = character.castSpell("poison", enemy);
                     break;
                 case 3:
-                    spellCast = character.castSpell("heal", enemy); // Assuming it's meant to heal the player, not the enemy
+                    spellCast = character.castSpell("heal", character);
                     break;
                 case 4:
                     spellCast = character.castSpell("stun", enemy);
@@ -78,8 +77,7 @@ public class PlayerView {
 
             if (!spellCast) {
                 System.out.println("Você não pode lançar essa magia. Tente novamente:");
-                escolhaMagia = scanner.nextInt();
-                scanner.nextLine();
+                break;
             }
         }
         return spellCast;
