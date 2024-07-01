@@ -24,7 +24,8 @@ public class CharacterMenu {
             System.out.println("Escolha uma opção:");
             System.out.println("1. Procurar inimigo(s)");
             System.out.println("2. Inventário");
-            System.out.println("3. Apagar personagem");
+            System.out.println("3. Shop");
+            System.out.println("4. Apagar personagem");
             System.out.println("9. Voltar");
 
             int option = ScanValidation.getValidIntInput(scanner);
@@ -50,6 +51,9 @@ public class CharacterMenu {
                     InventoryMenu.show(scanner, selectedCharacter);
                     break;
                 case 3:
+                    ShopMenu.show(scanner, selectedCharacter);
+                    break;
+                case 4:
                     System.out.println("Todo progresso com este personagem será perdido, tem certeza? Digite SIM para SIM");
                     String choice = ScanValidation.getValidStringInput(scanner);
                     if (choice.equalsIgnoreCase("sim")) {

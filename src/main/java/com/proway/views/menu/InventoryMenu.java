@@ -45,14 +45,14 @@ public class InventoryMenu {
     private static void showEquippedItems(Player selectedCharacter) {
         System.out.println("\nItens Equipados:");
         for (Item item : selectedCharacter.getInventory().getEquippedItems()) {
-            item.print();
+            item.print(false, false);
         }
     }
 
     private static void equipItem(Scanner scanner, Player selectedCharacter) throws SQLException {
         System.out.println("\nEquipar Item:");
         for (Item item : selectedCharacter.getInventory().getUnequippedItems()) {
-            item.print();
+            item.print(false, false);
         }
         System.out.print("Digite o ID do item que deseja equipar: ");
         int itemId = ScanValidation.getValidIntInput(scanner);

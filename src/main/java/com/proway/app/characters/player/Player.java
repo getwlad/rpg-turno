@@ -16,10 +16,11 @@ public class Player extends Character {
 
     public Player(String name, int lifePoints, int strength, int defense, int magic, int magicPoints, int magicDefense,
                   int criticalDamage, int level, int experience, int experienceToLevelUp, Inventory inventory,
-                  Armor armor, Weapon weapon) {
+                  Armor armor, Weapon weapon, int gold) {
         super(name, lifePoints, strength, defense, magic, magicPoints, magicDefense, criticalDamage, level,
                 experience, experienceToLevelUp, armor, weapon);
         this.inventory = inventory;
+        this.gold = gold;
     }
 
     public void gainExperience(Enemy enemy) {

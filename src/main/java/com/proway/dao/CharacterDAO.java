@@ -24,8 +24,8 @@ public class CharacterDAO {
 
     public void saveCharacter(Player character) {
         String sql = "INSERT INTO Character(name, class, lifePoints, strength, defense, magicPoints, magicDefense, " +
-                "criticalDamage, level, experience, experienceToLevelUp, magic) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "criticalDamage, level, experience, experienceToLevelUp, magic,gold) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, character.getName());
@@ -40,7 +40,7 @@ public class CharacterDAO {
             pstmt.setInt(10, character.getExperience());
             pstmt.setInt(11, character.getExperienceToLevelUp());
             pstmt.setInt(12, character.getMagic());
-
+            pstmt.setInt(13, character.getGold());
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Falha ao salvar o personagem, nenhuma linha afetada.");
@@ -63,7 +63,7 @@ public class CharacterDAO {
     public Player updateCharacter(Player character) throws SQLException {
         String sql = "UPDATE Character " +
                 "SET name = ?, class = ?, lifePoints = ?, strength = ?, defense = ?, magicPoints = ?, magicDefense = ?," +
-                "criticalDamage = ?, level = ?, experience = ?, experienceToLevelUp = ?, magic = ? " +
+                "criticalDamage = ?, level = ?, experience = ?, experienceToLevelUp = ?, magic = ?, gold = ? " +
                 "WHERE id = ?";
 
         try {
@@ -80,7 +80,8 @@ public class CharacterDAO {
             pstmt.setInt(10, character.getExperience());
             pstmt.setInt(11, character.getExperienceToLevelUp());
             pstmt.setInt(12, character.getMagic());
-            pstmt.setInt(13, character.getId());
+            pstmt.setInt(13, character.getGold());
+            pstmt.setInt(14, character.getId());
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Falha ao atualizar o personagem, nenhuma linha afetada.");
@@ -145,12 +146,13 @@ public class CharacterDAO {
         int level = rs.getInt("level");
         int experience = rs.getInt("experience");
         int experienceToLevelUp = rs.getInt("experienceToLevelUp");
+        int gold = rs.getInt("gold");
         Inventory inventory = inventoryDAO.loadByCharacterId(id);
         Player character = createCharacter(className, name);
         if (character != null) {
             initializeCharacter(character, id, lifePoints, strength, defense,
                     magicPoints, magicDefense, criticalDamage, level,
-                    experience, experienceToLevelUp, magic, inventory);
+                    experience, experienceToLevelUp, magic, inventory, gold);
         } else {
             System.out.println("Unknown character class: " + className);
         }
@@ -170,7 +172,7 @@ public class CharacterDAO {
 
     private Player initializeCharacter(Player character, int id, int lifePoints, int strength, int defense,
                                        int magicPoints, int magicDefense, int criticalDamage, int level,
-                                       int experience, int experienceToLevelUp, int magic, Inventory inventory) {
+                                       int experience, int experienceToLevelUp, int magic, Inventory inventory, int gold) {
         character.setId(id);
         character.setLife(lifePoints);
         character.setStrength(strength);
@@ -182,6 +184,7 @@ public class CharacterDAO {
         character.setExperience(experience);
         character.setMagic(magic);
         character.setExperienceToLevelUp(experienceToLevelUp);
+        character.setGold(gold);
         inventory.setItems(inventory.getItems().stream().map(item -> {
             item.setOwner(character);
             return item;

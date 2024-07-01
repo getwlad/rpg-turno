@@ -41,7 +41,7 @@ public class Inventory {
             System.out.println("  Sem nenhum item");
         } else {
             for (Item item : items) {
-                item.print();
+                item.print(false, false);
             }
         }
 

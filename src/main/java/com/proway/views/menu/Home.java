@@ -43,7 +43,7 @@ public class Home {
                     loadGame(scanner);
                     break;
                 case 3:
-                    items.forEach((Item::print));
+                    items.forEach((item -> item.print(false, false)));
                     break;
                 case 9:
                     System.out.println("Saindo do jogo...");

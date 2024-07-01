@@ -26,7 +26,8 @@ public class DatabaseInitializer {
                 "criticalDamage INTEGER, " +
                 "level INTEGER, " +
                 "experience INTEGER, " +
-                "experienceToLevelUp INTEGER" +
+                "experienceToLevelUp INTEGER," +
+                "gold INTEGER DEFAULT 0" +
                 ");";
 
         String sqlItem = "CREATE TABLE IF NOT EXISTS Item (" +

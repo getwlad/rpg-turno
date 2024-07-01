@@ -21,7 +21,6 @@ public class Item {
     private Type type;
     private Rarity rarity;
     private int level;
-    private int price;
     private int strengthBonus;
     private int magicBonus;
     private int lifePointsBonus;
@@ -30,6 +29,7 @@ public class Item {
     private int magicDefenseBonus;
     private boolean equipped;
     private Character owner;
+    private int price;
 
     public Item(int id, String name, Type type, Rarity rarity, int level,
                 int strengthBonus, int magicBonus, int lifePointsBonus, int criticalDamageBonus, int defenseBonus,
@@ -47,6 +47,7 @@ public class Item {
         this.magicDefenseBonus = magicDefenseBonus;
         this.equipped = false;
         this.owner = owner;
+        this.price = rarity.getGoldValue();
     }
 
 
@@ -116,9 +117,9 @@ public class Item {
         return true;
     }
 
-    public void print() {
+    public void print(boolean selling, boolean shopping) {
         System.out.println(" - Nome: " + name);
-        System.out.println("    id: " + itemInvId);
+        System.out.println("    id: " + (shopping ? id : itemInvId));
         System.out.println("    Tipo: " + type);
         System.out.println("    Raridade: " + rarity);
         System.out.println("    Level: " + level);
@@ -134,6 +135,7 @@ public class Item {
         System.out.println("    Bonus de defesa: +" + defenseBonus);
         System.out.println("    Bonus de  mágica: +" + magicDefenseBonus);
         System.out.println("    Bonus de dano crítico: +" + criticalDamageBonus);
+        System.out.println("    Valor: " +  (selling ? (this.getPrice() /2 ) : this.getPrice()));
 
     }
 
