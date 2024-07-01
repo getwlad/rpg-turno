@@ -25,26 +25,42 @@ O objetivo é fazer rpg de turno aplicando os conceitos de POO.
 - Banco de dados em memória para armazenar seu progresso, sem a necessidade de novas instalações, hospedagem ou precocupação com consultas.
 
 ## :video_camera: Demonstração de uso
-### Iniciando novo jogo
-![iniciando-novo-jogo](https://github.com/getwlad/rpg-turno/assets/102919718/74a64aa4-e714-43b8-a737-499e19001fd8)
 
-### Criando e excluindo personagem
-![criando-excluindo-personagme](https://github.com/getwlad/rpg-turno/assets/102919718/98197611-24f1-4d1c-8811-5744b5dd28e4)
+<details>
+    <summary> Iniciando novo jogo</summary>
+      <img src="https://github.com/getwlad/rpg-turno/assets/102919718/74a64aa4-e714-43b8-a737-499e19001fd8" alt="novo">
+</details>
 
-### Iniciando uma batalha
-![iniciando-batalha](https://github.com/getwlad/rpg-turno/assets/102919718/9ba9a63b-44bb-406c-ba9d-1427e5d0b877)
+<details>
+    <summary>Criando e excluindo personagem</summary>
+    <img src="https://github.com/getwlad/rpg-turno/assets/102919718/98197611-24f1-4d1c-8811-5744b5dd28e48" alt="criando">
+</details>
 
-### Ativando magias, monstro fugindo(probabilidade configurável, porcentagem de vida configurável) 
-![ativando-magias-e-monstro-fugindo](https://github.com/getwlad/rpg-turno/assets/102919718/4966a2bc-7dee-464e-a051-31728802d15b)
+<details>
+    <summary>Iniciando uma batalha</summary>
+    <img src="https://github.com/getwlad/rpg-turno/assets/102919718/9ba9a63b-44bb-406c-ba9d-1427e5d0b877" alt="iniciando">
+</details>
 
-### Equipando item
-![equipando-item](https://github.com/getwlad/rpg-turno/assets/102919718/cbb71350-6b40-48c0-b5da-c680e41090c2)
+<details>
+    <summary>Ativando magias, monstro fugindo(probabilidade configurável, porcentagem de vida configurável)</summary>
+    <img src="https://github.com/getwlad/rpg-turno/assets/102919718/4966a2bc-7dee-464e-a051-31728802d15b" alt="ativando">
+</details>
 
-### Desequipando item
-![desequipando-item](https://github.com/getwlad/rpg-turno/assets/102919718/c19e3a3c-1059-437e-a390-8da7dfb258ff)
+<details>
+    <summary>Equipando item</summary>
+    <img src="https://github.com/getwlad/rpg-turno/assets/102919718/cbb71350-6b40-48c0-b5da-c680e41090c2" alt="equipando">
+</details>
 
-### Resistindo a magia
-![image](https://github.com/getwlad/rpg-turno/assets/102919718/b5fc3133-6216-43c1-aaae-7653f1b929f7)
+<details>
+    <summary>Desequipando item</summary>
+    <img src="https://github.com/getwlad/rpg-turno/assets/102919718/c19e3a3c-1059-437e-a390-8da7dfb258ff" alt="desequipando">
+</details>
+
+<details>
+    <summary>Resistindo a magia</summary>
+    <img src="https://github.com/getwlad/rpg-turno/assets/102919718/b5fc3133-6216-43c1-aaae-7653f1b929f7" alt="resistindo">
+</details>
+
 
 ## :hammer_and_wrench: Instalação
 Você pode obter uma cópia do projeto através do comando
