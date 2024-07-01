@@ -1,6 +1,5 @@
 package com.proway.views.menu;
 
-import com.proway.app.characters.interfaces.Character;
 import com.proway.app.characters.player.Player;
 import com.proway.app.items.Item;
 import com.proway.util.ScanValidation;

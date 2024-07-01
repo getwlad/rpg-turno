@@ -48,13 +48,13 @@ public class BattleView {
 
             enemy = this.getEnemies().getFirst();
             System.out.println(enemy.getCharacterInfo(false));
-             }
+        }
 
-            if (this.getCharacter().getLifePoints() <= 0) {
-                System.out.println("Monstros venceram a batalha!");
-                this.getCharacter().setLifePoints(this.getCharacter().getLife());
-                SelectCharacter.show(scanner);
-            }
+        if (this.getCharacter().getLifePoints() <= 0) {
+            System.out.println("Monstros venceram a batalha!");
+            this.getCharacter().setLifePoints(this.getCharacter().getLife());
+            SelectCharacter.show(scanner);
+        }
 
     }
 
@@ -66,6 +66,7 @@ public class BattleView {
             SelectCharacter.show(scanner);
         }
     }
+
     public Player getCharacter() {
         return character;
     }

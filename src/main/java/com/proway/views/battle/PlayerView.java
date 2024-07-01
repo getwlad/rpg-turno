@@ -52,30 +52,30 @@ public class PlayerView {
 
         boolean spellCast = false;
 
-            switch (escolhaMagia) {
-                case 1:
-                    spellCast = character.castSpell("burn", enemy);
-                    break;
-                case 2:
-                    spellCast = character.castSpell("poison", enemy);
-                    break;
-                case 3:
-                    spellCast = character.castSpell("heal", character);
-                    break;
-                case 4:
-                    spellCast = character.castSpell("stun", enemy);
-                    break;
-                case 5:
-                    spellCast = character.castSpell("sleep", enemy);
-                    break;
-                default:
-                    System.out.println("Escolha inválida!");
-                    break;
-            }
+        switch (escolhaMagia) {
+            case 1:
+                spellCast = character.castSpell("burn", enemy);
+                break;
+            case 2:
+                spellCast = character.castSpell("poison", enemy);
+                break;
+            case 3:
+                spellCast = character.castSpell("heal", character);
+                break;
+            case 4:
+                spellCast = character.castSpell("stun", enemy);
+                break;
+            case 5:
+                spellCast = character.castSpell("sleep", enemy);
+                break;
+            default:
+                System.out.println("Escolha inválida!");
+                break;
+        }
 
-            if (!spellCast) {
-                System.out.println("Você não pode lançar essa magia. Tente novamente:");
-            }
+        if (!spellCast) {
+            System.out.println("Você não pode lançar essa magia. Tente novamente:");
+        }
 
         return spellCast;
     }

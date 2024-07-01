@@ -12,8 +12,8 @@ public class EnemiesView {
             if (!enemy.hasStunEffect() && !enemy.hasSleepEffect()) {
                 double randomChoice = Math.random();
 
-                if(randomChoice < 0.5 &&
-                        enemy.getLifePoints() <= (enemy.getLife() * 0.3) && enemy.getMagicPoints() >= 15){
+                if (randomChoice < 0.5 &&
+                        enemy.getLifePoints() <= (enemy.getLife() * 0.3) && enemy.getMagicPoints() >= 15) {
                     enemy.castSpell("heal", enemy);
                     return;
                 }
@@ -41,7 +41,7 @@ public class EnemiesView {
                 if (enemy.getLifePoints() <= (enemy.getLife() * 0.2) && Math.random() < 0.3) {
                     System.out.println(enemy.getName() + " fugiu da batalha!");
                     enemies.remove(enemy);
-                    if(enemies.isEmpty()){
+                    if (enemies.isEmpty()) {
                         return;
                     }
                     enemy = enemies.getFirst();
