@@ -17,6 +17,9 @@ O objetivo é fazer rpg de turno aplicando os conceitos de POO.
 - É possível escolher um de seus personagens a qualquer momento navegando pelos menus.
 - Personagem ganha experiência ao derrotar um monstro, conforme vai evoluindo seu nível, a quantidade necessária para o próximo nível aumenta de forma escalável.
 - Personagem pode equipar items, dividoos no momento em duas categorias: armor e weapon, um personagem só pode equipar uma arma de sua classe, monstros podem equipar qualquer arma.
+- Shop com opção de compra ou venda de itens.
+- Classes e personagens tem fraquezas contra certos tipos de habilidades, o dano é aumentado quando se usa x habilidade contra inimigo que tem x fraqueza.
+- Monstros com niveis de monstro, mini chefe, chefe.
 - Inimigos tem probabilidade de droparem items ao serem derrotados, podendo ser armor ou weapon, sua raridade é dividida em: COMMON, RARE, SUPER_RARE, e EPIC. Quanto mais raro o item, melhor são seus atributos.
 - Seu personagem pode subir de nível conforme derrota monstros, ele também pode lançar magias que causam dano e debuffs nos inimigos.
 - Inimigos podem fugir ao atingir uma certa porcentagem de vida ou utilizar cura.
