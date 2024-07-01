@@ -32,7 +32,8 @@ public class SelectCharacter {
                 System.out.println("Você selecionou: " + selectedCharacter.getName());
                 CharacterMenu.show(scanner, selectedCharacter.getId());
             } else if (choice == 0) {
-                return;
+                Home.show();
+                break;
             } else if (choice == characters.size() + 1) {
                 NewGame.show(scanner, false);
             } else {

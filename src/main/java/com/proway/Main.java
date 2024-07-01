@@ -14,6 +14,6 @@ public class Main {
         databaseInitializer.createTables();
         databaseInitializer.insertItems();
         DatabaseUtil.closeConnection(connection);
-        Home.run();
+        Home.show();
     }
 }

@@ -4,7 +4,7 @@ import com.proway.app.characters.enemies.Enemy;
 import com.proway.app.characters.player.Player;
 import com.proway.dao.EnemyDAO;
 import com.proway.util.ScanValidation;
-import com.proway.views.battle.Start;
+import com.proway.views.battle.BattleView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,8 +39,8 @@ public class CharacterMenu {
                         System.out.println("Você encontrou um(a) " + enemy.getName() + "!");
                     }
 
-                    // Iniciar batalha com o personagem selecionado e o inimigo aleatório
-                    Start battle = new Start(selectedCharacter, enemies);
+                    // Iniciar batalha com o personagem selecionado e os inimigos aleatórios
+                    BattleView battle = new BattleView(selectedCharacter, enemies);
 
                     battle.begin(scanner);
 
@@ -55,10 +55,12 @@ public class CharacterMenu {
                     if (choice.equalsIgnoreCase("sim")) {
                         characterDAO.deleteById(selectedCharacter.getId());
                         Home.updateCharacters();
+                        SelectCharacter.show(scanner);
                     }
-                    return;
+                    break;
                 case 9:
-                    return; // Voltar para o menu anterior
+                    SelectCharacter.show(scanner);
+                    break;
                 default:
                     System.out.println("Opção inválida!");
                     break;

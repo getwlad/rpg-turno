@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-public class Start {
+public class BattleView {
     private final Player character;
     private final List<Enemy> enemies;
 
-    public Start(Player character, List<Enemy> enemies) {
+    public BattleView(Player character, List<Enemy> enemies) {
         this.character = character;
         this.enemies = enemies;
     }

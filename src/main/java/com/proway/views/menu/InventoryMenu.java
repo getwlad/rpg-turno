@@ -1,5 +1,6 @@
 package com.proway.views.menu;
 
+import com.proway.app.characters.interfaces.Character;
 import com.proway.app.characters.player.Player;
 import com.proway.app.items.Item;
 import com.proway.util.ScanValidation;
@@ -33,7 +34,8 @@ public class InventoryMenu {
                     unequipItem(scanner, selectedCharacter);
                     break;
                 case 9:
-                    return;
+                    CharacterMenu.show(scanner, selectedCharacter.getId());
+                    break;
                 default:
                     System.out.println("Opção inválida!");
                     break;

@@ -23,7 +23,7 @@ public class Home {
     public final static List<Item> items = itemDAO.getAllItems();
     private static List<Player> characters = characterDAO.loadCharacters();
 
-    public static void run() throws SQLException {
+    public static void show() throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bem-vindo ao RPG WayTSystem World");
         while (true) {
@@ -47,7 +47,7 @@ public class Home {
                     break;
                 case 9:
                     System.out.println("Saindo do jogo...");
-                    return;
+                    System.exit(0);
                 default:
                     System.out.println("Opção inválida!");
             }
