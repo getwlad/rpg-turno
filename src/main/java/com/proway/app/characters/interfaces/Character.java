@@ -208,7 +208,8 @@ public abstract class Character {
         sb.append("Level: ").append(level).append("\n");
         sb.append("Vida: ").append(lifePoints).append(" (Bonus: ").append(getLifePointsBonus()).append(")\n");
         sb.append("Força: ").append(strength).append(" (Bonus: ").append(getStrengthBonus()).append(")\n");
-        sb.append("Pontos Mágicos: ").append(magicPoints).append(" (Bonus: ").append(getMagicBonus()).append(")\n");
+        sb.append("Magia: ").append(magic).append(" (Bonus: ").append(getMagicBonus()).append(")\n");
+        sb.append("MP: ").append(magicPoints).append(" (Bonus: ").append(getMagicPoints()).append(")\n");
         sb.append("Defesa Mágica: ").append(magicDefenseBonus).append(" (Bonus: ").append(getMagicDefenseBonus()).append(")\n");
         sb.append("Dano Crítico: ").append(criticalDamage).append(" (Bonus: ").append(getCriticalDamageBonus()).append(")\n");
         sb.append("Defesa: ").append(defense).append(" (Bonus: ").append(getDefenseBonus()).append("\n");

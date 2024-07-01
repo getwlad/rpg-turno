@@ -3,6 +3,7 @@ package com.proway.views.battle;
 import com.proway.app.characters.enemies.Enemy;
 import com.proway.app.characters.player.Player;
 import com.proway.views.menu.Home;
+import com.proway.views.menu.SelectCharacter;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -26,36 +27,45 @@ public class BattleView {
 
             System.out.println();
 
-            if (enemy.getLifePoints() <= 0) {
-                System.out.println(enemy.getName() + " foi derrotado.");
-                character.gainExperience(enemy);
-                enemy.dropItem(this.getCharacter());
-                this.enemies.remove(enemy);
-
-                if (this.getEnemies().isEmpty()) {
-                    System.out.println("Jogador venceu a batalha!");
-                    this.getCharacter().setLifePoints(this.getCharacter().getLife());
-                    Home.characterDAO.updateCharacter(character);
-                    break;
-                }
-
-                enemy = this.getEnemies().getFirst();
-                System.out.println(enemy.getCharacterInfo(false));
-            }
-
+            checkResult(enemy, scanner);
 
             EnemiesView.turn(enemy, this.getCharacter(), this.getEnemies());
+
+            checkResult(enemy, scanner);
+        }
+    }
+
+    public void checkResult(Enemy enemy, Scanner scanner) throws SQLException {
+        verificarSeRestaInimigos(scanner);
+
+        if (enemy.getLifePoints() <= 0) {
+            System.out.println(enemy.getName() + " foi derrotado.");
+            character.gainExperience(enemy);
+            enemy.dropItem(this.getCharacter());
+            this.enemies.remove(enemy);
+
+            verificarSeRestaInimigos(scanner);
+
+            enemy = this.getEnemies().getFirst();
+            System.out.println(enemy.getCharacterInfo(false));
+             }
 
             if (this.getCharacter().getLifePoints() <= 0) {
                 System.out.println("Monstros venceram a batalha!");
                 this.getCharacter().setLifePoints(this.getCharacter().getLife());
-                break;
+                SelectCharacter.show(scanner);
             }
 
-        }
     }
 
-
+    public void verificarSeRestaInimigos(Scanner scanner) throws SQLException {
+        if (this.getEnemies().isEmpty()) {
+            System.out.println("Jogador venceu a batalha!");
+            this.getCharacter().setLifePoints(this.getCharacter().getLife());
+            Home.characterDAO.updateCharacter(character);
+            SelectCharacter.show(scanner);
+        }
+    }
     public Player getCharacter() {
         return character;
     }

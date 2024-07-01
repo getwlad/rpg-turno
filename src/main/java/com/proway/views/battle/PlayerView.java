@@ -52,7 +52,6 @@ public class PlayerView {
 
         boolean spellCast = false;
 
-        while (true) {
             switch (escolhaMagia) {
                 case 1:
                     spellCast = character.castSpell("burn", enemy);
@@ -76,9 +75,8 @@ public class PlayerView {
 
             if (!spellCast) {
                 System.out.println("Você não pode lançar essa magia. Tente novamente:");
-                break;
             }
-        }
+
         return spellCast;
     }
 

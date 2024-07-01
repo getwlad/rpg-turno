@@ -12,8 +12,14 @@ public class EnemiesView {
             if (!enemy.hasStunEffect() && !enemy.hasSleepEffect()) {
                 double randomChoice = Math.random();
 
+                if(randomChoice < 0.5 &&
+                        enemy.getLifePoints() <= (enemy.getLife() * 0.3) && enemy.getMagicPoints() >= 15){
+                    enemy.castSpell("heal", enemy);
+                    return;
+                }
+
                 if (randomChoice < 0.5 && enemy.getMagicPoints() >= 30) {
-                    int spellChoice = (int) (Math.random() * 5);
+                    int spellChoice = (int) (Math.random() * 4);
                     switch (spellChoice) {
                         case 0:
                             enemy.castSpell("burn", target);
@@ -27,9 +33,6 @@ public class EnemiesView {
                         case 3:
                             enemy.castSpell("sleep", target);
                             break;
-                        case 4:
-                            enemy.castSpell("heal", enemy);
-                            break;
                     }
                 } else {
                     enemy.attack(target);
@@ -38,6 +41,12 @@ public class EnemiesView {
                 if (enemy.getLifePoints() <= (enemy.getLife() * 0.2) && Math.random() < 0.3) {
                     System.out.println(enemy.getName() + " fugiu da batalha!");
                     enemies.remove(enemy);
+                    if(enemies.isEmpty()){
+                        return;
+                    }
+                    enemy = enemies.getFirst();
+                    System.out.println(enemy.getName() + " entrou na batalha!");
+                    System.out.println(enemy.getCharacterInfo(false));
                 } else {
                     if (target.getLifePoints() <= 0) {
                         System.out.println(target.getName() + " foi derrotado.");
