@@ -2,8 +2,10 @@ package com.proway.views.battle;
 
 import com.proway.app.characters.enemies.Enemy;
 import com.proway.app.characters.interfaces.Character;
+import com.proway.app.characters.skills.interfaces.Skill;
 import com.proway.util.ScanValidation;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class PlayerView {
@@ -19,6 +21,7 @@ public class PlayerView {
                     System.out.println("\n" + character.getName() + ", escolha sua ação:");
                     System.out.println("1. Atacar");
                     System.out.println("2. Lançar Magia");
+                    System.out.println("3. Usar habilidade");
                     int escolhaAcao = ScanValidation.getValidIntInput(scanner);
 
                     switch (escolhaAcao) {
@@ -28,6 +31,9 @@ public class PlayerView {
                             break;
                         case 2:
                             actionSuccessful = castSpell(character, scanner, enemy);
+                            break;
+                        case 3:
+                            actionSuccessful = useSkill(character, scanner, enemy);
                             break;
                         default:
                             System.out.println("Escolha inválida!");
@@ -39,6 +45,29 @@ public class PlayerView {
             }
         }
     }
+
+    private static boolean useSkill(Character character, Scanner scanner, Enemy enemy) {
+        List<Skill> skills = character.getSkills();
+
+        if (skills.isEmpty()) {
+            System.out.println(character.getName() + " não possui habilidades para usar.");
+            return false;
+        }
+
+        System.out.println("Escolha uma habilidade para usar:");
+        for (int i = 0; i < skills.size(); i++) {
+            Skill skill = skills.get(i);
+            System.out.println((i + 1) + ". " + skill.getName() + " - Dano base: " + skill.getDamage());
+        }
+
+        int escolhaHabilidade = ScanValidation.getValidIntInput(scanner);
+
+        Skill chosenSkill = skills.get(escolhaHabilidade - 1);
+        character.attack(enemy, chosenSkill);
+
+       return true;
+    }
+
 
     private static boolean castSpell(Character character, Scanner scanner, Enemy enemy) {
         System.out.println("Escolha uma magia para lançar:");

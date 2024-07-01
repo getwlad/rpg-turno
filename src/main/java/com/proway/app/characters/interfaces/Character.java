@@ -1,5 +1,7 @@
 package com.proway.app.characters.interfaces;
 
+import com.proway.app.characters.skills.interfaces.Skill;
+import com.proway.app.characters.skills.interfaces.SkillType;
 import com.proway.app.effects.*;
 import com.proway.app.effects.interfaces.Effect;
 import com.proway.app.items.Armor;
@@ -26,6 +28,8 @@ public abstract class Character {
     private int experience;
     private int experienceToLevelUp;
     private int life;
+    private SkillType weakness;
+    private List<Skill> skills;
     private Weapon weapon;
     private Armor armor;
     private int strengthBonus = 0;
@@ -43,7 +47,7 @@ public abstract class Character {
 
     public Character(String name, int lifePoints, int strength, int defense, int magic, int magicPoints,
                      int magicDefense, int criticalDamage, int level, int experience,
-                     int experienceToLevelUp, Armor armor, Weapon weapon) {
+                     int experienceToLevelUp, Armor armor, Weapon weapon, SkillType weakness, List<Skill> skills) {
         this.name = name;
         this.magic = magic + (level * BASE_STAT_INCREASE);
         this.life = lifePoints + (level * BASE_STAT_INCREASE);
@@ -66,6 +70,8 @@ public abstract class Character {
             weapon.equip(this);
             this.weapon = weapon;
         }
+        this.weakness = weakness;
+        this.skills = skills;
     }
 
 
@@ -74,15 +80,48 @@ public abstract class Character {
         this.setLifePoints(Math.max(remainingLifePoints, 0));
     }
 
+    public void attack(Character target, Skill skill) {
+        int damage = calcDamage(target, skill);
+        if (isCriticalHit()) {
+            damage *= (int) getCriticalDamageMultiplier();
+            System.out.println("Dano crítico!");
+        }
+        if (damage > 0) {
+            target.receiveDamage(damage);
+            System.out.println(this.getName() + " ataca " + target.getName() + " com " + skill.getName() + " causando " + damage + " de dano.");
+            System.out.println(target.getName() + ", pontos de vida restantes: " + target.getLifePoints());
+            return;
+        }
+        System.out.println("O ataque de " + this.getName() + " não teve efeito! " + target.getName() + " resistiu.");
+    }
+
     public void attack(Character target) {
         int damage = calctStrengthDamage(target);
         if (isCriticalHit()) {
             damage *= (int) getCriticalDamageMultiplier();
             System.out.println("Dano crítico!");
         }
-        target.receiveDamage(damage);
-        System.out.println(this.getName() + " ataca " + target.getName() + " causando " + damage + " de dano.");
-        System.out.println(target.getName() + ", pontos de vida restantes: " + target.getLifePoints());
+        if (damage > 0) {
+            target.receiveDamage(damage);
+            System.out.println(this.getName() + " ataca " + target.getName() + " causando " + damage + " de dano.");
+            System.out.println(target.getName() + ", pontos de vida restantes: " + target.getLifePoints());
+        }
+        System.out.println("O ataque de " + this.getName() + " não teve efeito! " + target.getName() + " resistiu.");
+    }
+
+    protected int calcDamage(Character target, Skill skill) {
+        int baseDamage = skill.getDamage();
+        baseDamage += (calcMagicDamage(target) / 4);
+        double damageModifier = 1.0;
+
+        if (skill.getSkillType() == target.getWeakness() && baseDamage > 0) {
+            damageModifier *= 1.3;
+            System.out.println(this.getName() + " explorou a fraqueza de " + target.getName() + "!");
+        }
+
+        baseDamage = Math.max((int) (baseDamage * damageModifier), 0);
+
+        return baseDamage;
     }
 
     public void heal(int points) {

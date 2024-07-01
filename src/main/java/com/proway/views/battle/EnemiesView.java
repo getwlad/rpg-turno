@@ -4,6 +4,7 @@ import com.proway.app.characters.enemies.Enemy;
 import com.proway.app.characters.interfaces.Character;
 
 import java.util.List;
+import java.util.Random;
 
 public class EnemiesView {
     public static void turn(Enemy enemy, Character target, List<Enemy> enemies) {
@@ -18,7 +19,7 @@ public class EnemiesView {
                     return;
                 }
 
-                if (randomChoice < 0.5 && enemy.getMagicPoints() >= 30) {
+                if (randomChoice < 0.3 && enemy.getMagicPoints() >= 30) {
                     int spellChoice = (int) (Math.random() * 4);
                     switch (spellChoice) {
                         case 0:
@@ -34,7 +35,12 @@ public class EnemiesView {
                             enemy.castSpell("sleep", target);
                             break;
                     }
-                } else {
+                }
+                else if(randomChoice >= 0.3 && randomChoice <= 0.6 ){
+                    enemy.attack(target,
+                            enemy.getSkills().get(Math.max(new Random().nextInt(enemy.getSkills().size()), 0)));
+                }
+                else {
                     enemy.attack(target);
                 }
 

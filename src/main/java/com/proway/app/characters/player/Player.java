@@ -2,11 +2,15 @@ package com.proway.app.characters.player;
 
 import com.proway.app.characters.enemies.Enemy;
 import com.proway.app.characters.interfaces.Character;
+import com.proway.app.characters.skills.interfaces.Skill;
+import com.proway.app.characters.skills.interfaces.SkillType;
 import com.proway.app.items.Armor;
 import com.proway.app.items.Weapon;
 import com.proway.app.miscellany.Inventory;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,9 +20,9 @@ public class Player extends Character {
 
     public Player(String name, int lifePoints, int strength, int defense, int magic, int magicPoints, int magicDefense,
                   int criticalDamage, int level, int experience, int experienceToLevelUp, Inventory inventory,
-                  Armor armor, Weapon weapon, int gold) {
+                  Armor armor, Weapon weapon, int gold, SkillType weakness, List<Skill> skills) {
         super(name, lifePoints, strength, defense, magic, magicPoints, magicDefense, criticalDamage, level,
-                experience, experienceToLevelUp, armor, weapon);
+                experience, experienceToLevelUp, armor, weapon, weakness, skills);
         this.inventory = inventory;
         this.gold = gold;
     }

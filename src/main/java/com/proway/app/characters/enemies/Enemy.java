@@ -1,7 +1,10 @@
 package com.proway.app.characters.enemies;
 
+import com.proway.app.characters.enemies.enums.MonsterType;
 import com.proway.app.characters.interfaces.Character;
 import com.proway.app.characters.player.Player;
+import com.proway.app.characters.skills.interfaces.Skill;
+import com.proway.app.characters.skills.interfaces.SkillType;
 import com.proway.app.items.Armor;
 import com.proway.app.items.Item;
 import com.proway.app.items.Weapon;
@@ -18,15 +21,16 @@ import java.util.Random;
 @Getter
 @Setter
 public class Enemy extends Character {
-    private final String type;
+    private final MonsterType type;
     private final int expReward;
     private Item equippedItem;
     private static final ItemService itemService = new ItemService();
 
-    public Enemy(String name, String type, int lifePoints, int strength, int defense, int magic, int magicPoints,
-                 int magicDefense, int criticalDamage, int level, int experience, int experienceToLevelUp, int expReward) {
+    public Enemy(String name, MonsterType type, int lifePoints, int strength, int defense, int magic, int magicPoints,
+                 int magicDefense, int criticalDamage, int level, int experience, int experienceToLevelUp, int expReward,
+        SkillType weakness, List<Skill> skills) {
         super(name, lifePoints, strength, defense, magic, magicPoints, magicDefense, criticalDamage, level, experience, experienceToLevelUp,
-                getRandomArmor(), getRandomWeapon());
+                getRandomArmor(), getRandomWeapon(), weakness, skills);
         this.type = type;
         this.expReward = expReward;
     }
